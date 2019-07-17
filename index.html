@@ -5,18 +5,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="other\fontawesome\css\all.css">
   <title>Orbit IM</title>
 </head>
 
 <body>
   <div class="main" id="main">
-    <p class="them">Hello</p>
-    <p class="you">world</p>
+    <i class="fas fa-user Right Icon"></i>
+    <div class="Bubble Blue">
+      <p class="them">Lorem</p>
+    </div>
+    <div class="divider"></div>
+    <i class="fas fa-user Left Icon"></i>
+    <div class="Bubble White">
+      <p class="you">ipsum</p>
+    </div>
+    <div class="divider"></div>
   </div>
-  <form id="sendbox" class="send-module" onsubmit="sendmsg(); return false;" method="post">
-    <input type="text" id="input" name="input">
-    <input type="submit" id="submit" name="submit">
+  <form id="sendbox" class="send-module" onsubmit="return false;" method="post">
+    <input type="text" id="input" name="input" maxlength="34" placeholder="Type your message here...">
   </form>
+  <script src="script.js"></script>
 </body>
 
 </html>
