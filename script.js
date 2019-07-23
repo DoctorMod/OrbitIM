@@ -9,15 +9,27 @@ $(document).ready(function () {
   var messageContent = $('#messageContent'),
       sendMessageButton = $('#sendMessageButton'),
       messageList = $('#messageList');
- 
+	 
+	var users = [];
   // Handles all the messages coming in from pubnub.subscribe.
   function handleMessage(message) {
-    var messageEl = $("<li class='message'>"
+	  var classVal = -1;
+		  for (var i = 0; i < users.length; i++) {
+			  if (users[i] == message.username) {
+				  classVal = i + 1;
+			  }
+			}
+			
+			if (classVal == -1) {
+				users.push(message.username);
+				classVal = users.length;
+			}
+			console.log(classVal);
+    var messageEl = $("<li class='message "+ classVal +"'>"
         + "<span class='username'>" + message.username + ": </span>"
         + message.text
         + "</li>");
     messageList.append(messageEl);
- 
     // Scroll to bottom of page
     $("html, body").animate({ scrollTop: $(document).height() - $(window).height() }, 'slow');
   };
@@ -52,6 +64,14 @@ $(document).ready(function () {
     channel: 'chat',
     message: handleMessage
   });
-});
+  
+  pubnub.publish({
+        channel: 'chat',
+        message: {
+          username: $('#Username').val(),
+          text: "has joined the channel"
+        }
+      });
 
+});
 document.getElementById('Username').value = localStorage.username;
