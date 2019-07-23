@@ -1,26 +1,29 @@
-<!DOCTYPE html>
-<html lang="en-au">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="other\fontawesome\css\all.css">
-  <title>Orbit IM</title>
+  <title>Orbit Instant Messenger</title>
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,700,400italic" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="main.css" type="text/css" />
+  
+  <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+  <script src="http://cdn.pubnub.com/pubnub-3.4.4.js"></script>
 </head>
 
 <body>
-  <div class="main" id="main">
+    <div>
+      <h1>Orbit Messenger</h1>
+    </div>
+    <div>
+      <ul id="messageList">
+      </ul>
+    </div>
+
+    <div class="send-module">
+      <input id="messageContent"></input>
+        <div>
+          <input type="button" id="sendMessageButton" value="Send Message">
+          <input id="Username" data-rel="back" data-role="button" placeholder="Username"></input>
+        </div>
+    </div>
   </div>
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <form id="sendbox" class="send-module" onsubmit="return false;" method="post">
-    <input type="text" id="input" name="input" maxlength="34" placeholder="Type your message here...">
-  </form>
   <script src="script.js"></script>
 </body>
-
 </html>

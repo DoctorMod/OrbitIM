@@ -1,0 +1,23 @@
+* {
+  font-family: sans-serif;
+}
+
+.send-module {
+  position: fixed;
+  bottom: 0px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  left: 0px;
+  width: 100%;
+  border-radius: 20px 20px 0px 0px;
+  background-color: #31A6ff;
+  text-align: center;
+}
+
+.send-module input {
+  border-radius: 5px;
+  width: 430px;
+  padding: 10px 5px;
+  border: solid 2px #31A6ff;
+  outline: none;
+}
