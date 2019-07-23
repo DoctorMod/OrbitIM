@@ -4,16 +4,16 @@ $(document).ready(function () {
     publish_key: 'pub-c-b6140a7a-583f-4085-aaa6-49fe56da1533',
     subscribe_key: 'sub-c-e38a37dc-ad26-11e9-a87a-b2acb6d6da6e'
   });
- 
+	
   // Grab references for all of our elements.
   var messageContent = $('#messageContent'),
       sendMessageButton = $('#sendMessageButton'),
       messageList = $('#messageList');
-	 
 	var users = [];
   // Handles all the messages coming in from pubnub.subscribe.
   function handleMessage(message) {
 	  var classVal = -1;
+	  recieveMsg(message.text);
 		  for (var i = 0; i < users.length; i++) {
 			  if (users[i] == message.username) {
 				  classVal = i + 1;
@@ -69,9 +69,12 @@ $(document).ready(function () {
         channel: 'chat',
         message: {
           username: $('#Username').val(),
-          text: "has joined the channel"
+			text: "has joined the channel"
         }
       });
-
 });
+if(localStorage.username == undefined) {
+		localStorage.username = "user"+Math.floor(Math.random()*100);
+	}
 document.getElementById('Username').value = localStorage.username;
+document.getElementById('logonUser').innerText = localStorage.username;
