@@ -9,6 +9,7 @@ $(document).ready(function () {
   // Grab references for all of our elements.
   var messageContent = $('#messageContent'),
       sendMessageButton = $('#sendMessageButton'),
+	  memberList = $('#memberList'),
       messageList = $('#messageList');
 	var users = [];
   // Handles all the messages coming in from pubnub.subscribe.
@@ -31,6 +32,23 @@ $(document).ready(function () {
     messageList.append(messageEl);
     // Scroll to bottom of page
     $("html, body").animate({ scrollTop: $(document).height() - $(window).height() }, 'slow');
+  };
+  
+  function SendRecieve(message) {
+	  console.log(message);
+	  if (message.send == "true") {
+		  memberList.innerHTML = "";
+		  pubnub.publish({
+        channel: 'membersCheck',
+        message: {
+          username: $('#Username').val(),
+          send: "false"
+        }
+      });
+	  } else {
+		  var memberEl = $("<li class='User'>"+ message.username + "</li>");
+		  memberList.append(memberEl);
+	  }
   };
 
   // Compose and send a message when the user clicks our send message button.
@@ -63,6 +81,11 @@ $(document).ready(function () {
     channel: 'chat',
     message: handleMessage
   });
+
+  pubnub.subscribe({
+    channel: 'membersCheck',
+    message: SendRecieve
+  });
   
   pubnub.publish({
         channel: 'chat',
@@ -71,12 +94,19 @@ $(document).ready(function () {
 			text: "has joined the channel"
         }
       });
+	  
+  pubnub.publish({
+        channel: 'membersCheck',
+        message: {
+          username: $('#Username').val(),
+          send: "true"
+        }
+      });
 });
 if(localStorage.username == undefined) {
 		localStorage.username = "user"+Math.floor(Math.random()*100);
 	}
 document.getElementById('Username').value = localStorage.username;
-document.getElementById('logonUser').innerText = localStorage.username;
 function reset() {
 	document.getElementById('messageList').innerHTML = '';
 }
