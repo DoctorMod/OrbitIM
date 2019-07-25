@@ -1,6 +1,7 @@
+var pubnub;
 $(document).ready(function () {
   // Initialize the PubNub API connection.
-  var pubnub = PUBNUB.init({
+  pubnub = PUBNUB.init({
     publish_key: 'pub-c-b6140a7a-583f-4085-aaa6-49fe56da1533',
     subscribe_key: 'sub-c-e38a37dc-ad26-11e9-a87a-b2acb6d6da6e'
   });
@@ -13,7 +14,6 @@ $(document).ready(function () {
   // Handles all the messages coming in from pubnub.subscribe.
   function handleMessage(message) {
 	  var classVal = -1;
-	  recieveMsg(message.text);
 		  for (var i = 0; i < users.length; i++) {
 			  if (users[i] == message.username) {
 				  classVal = i + 1;
@@ -24,7 +24,6 @@ $(document).ready(function () {
 				users.push(message.username);
 				classVal = users.length;
 			}
-			console.log(classVal);
     var messageEl = $("<li class='message "+ classVal +"'>"
         + "<span class='username'>" + message.username + ": </span>"
         + message.text
@@ -78,3 +77,16 @@ if(localStorage.username == undefined) {
 	}
 document.getElementById('Username').value = localStorage.username;
 document.getElementById('logonUser').innerText = localStorage.username;
+function reset() {
+	document.getElementById('messageList').innerHTML = '';
+}
+
+window.onbeforeunload = function(){	 
+	 pubnub.publish({
+        channel: 'chat',
+        message: {
+          username: $('#Username').val(),
+			text: "has left the channel"
+        }
+      });
+}
