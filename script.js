@@ -1,4 +1,5 @@
 var pubnub;
+var checkup = [];
 $(document).ready(function() {
   // Initialize the PubNub API connection.
   pubnub = PUBNUB.init({
@@ -37,9 +38,10 @@ $(document).ready(function() {
   };
 
   function handleMembers(message) {
-    if (message.send == localStorage.username) {
+    if (message.send == localStorage.username && !checkup.includes(message.username)) {
       var memberEl = $("<li class='member'>" + message.username + "</li>");
       memberList.append(memberEl);
+      checkup.push(message.username);
     } else {
       pubnub.publish({
         channel: 'members',
@@ -49,7 +51,7 @@ $(document).ready(function() {
         }
       });
     }
-  };
+  }
 
   // Compose and send a message when the user clicks our send message button.
   sendMessageButton.click(function(event) {
@@ -97,7 +99,6 @@ $(document).ready(function() {
   pubnub.publish({
     channel: 'members',
     message: {
-      username: $('#Username').val(),
       send: localStorage.username
     }
   });

@@ -1,7 +1,5 @@
 <head>
   <title>Orbit IM</title>
-  <link rel="shortcut icon" href="img/icon.png">
-  <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,700,400italic" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="main.css" type="text/css" />
   <link rel="shortcut icon" type="image/png" href="icon.png">
   <link href="https://fonts.googleapis.com/css?family=Rubik&display=swap" rel="stylesheet">
@@ -11,34 +9,35 @@
 </head>
 
 <body>
+  <div>
+    <h1>Orbit Messenger</h1>
     <div>
-      <h1>Orbit Messenger</h1>
-      <div>
-        <input id="Username" placeholder="Username"></input>
-      </div>
+      <label><input id="Username" placeholder="Username"></input> has joined the channel</label>
     </div>
-    <div class="member-pane">
-      <h1>Members</h1>
-      <ul class="memberList" id ="memberList">
+  </div>
+  <div class="member-pane">
+    <h1>Members</h1>
+    <ul class="memberList" id="memberList">
+    </ul>
+  </div>
+  <div class="display-content">
+    <div>
+      <ul id="messageList">
       </ul>
     </div>
-    <div class="display-content">
-      <div>
-        <ul id="messageList">
-        </ul>
-      </div>
-    </div>
-    <div class="send-module">
-      <input id="messageContent"></input>
-        
-          <label for="messageContent">
-			<button type="button" name="button" class="button" id="sendMessageButton"><i class="fas fa-paper-plane"></i></button>
-			</label>
-			<label for="messageContent">
-			<button id="reset" onclick="reset();" class="button""><i class="fas fa-redo"></i></button>
-			</label>
-		  
-		</div>
+  </div>
+  <div class="send-module">
+    <input id="messageContent"></input>
+
+    <label for="messageContent">
+      <button type="button" name="button" class="button" id="sendMessageButton"><i class="fas fa-paper-plane"></i></button>
+    </label>
+    <label for="messageContent">
+      <button id="reset" onclick="reset();" class="button""><i class=" fas fa-redo"></i></button>
+    </label>
+
+  </div>
   <script src="script.js"></script>
 </body>
+
 </html>
