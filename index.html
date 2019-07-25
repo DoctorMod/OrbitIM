@@ -30,16 +30,15 @@
     </div>
     <div class="send-module">
       <input id="messageContent"></input>
-        <div>
-          <input type="button" id="sendMessageButton" value="Send Message">
-          <input id="Username" placeholder="Username"></input>
-		  <input type="reset" id="reset" value="Reset" onclick="reset();">
-        </div>
-      <input id="messageContent" placeholder="Message"></input>
-      <label for="messageContent">
-        <button type="button" name="button" id="sendMessageButton"><i class="fas fa-paper-plane"></i></button>
-      </label>
-    </div>
+        
+          <label for="messageContent">
+			<button type="button" name="button" class="button" id="sendMessageButton"><i class="fas fa-paper-plane"></i></button>
+			</label>
+			<label for="messageContent">
+			<button id="reset" onclick="reset();" class="button""><i class="fas fa-redo"></i></button>
+			</label>
+		  
+		</div>
   <script src="script.js"></script>
 </body>
 </html>
