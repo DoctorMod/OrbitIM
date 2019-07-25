@@ -1,5 +1,5 @@
 * {
-  font-family: sans-serif;
+  font-family: 'Rubik', sans-serif;
 }
 
 .send-module {
@@ -10,13 +10,53 @@
   left: 0px;
   width: 100%;
   border-radius: 20px 20px 0px 0px;
-  background-color: #31A6ff;
+  background-image: linear-gradient(to right, #31a6ff, #31c7ff);
   text-align: center;
 }
 
-.send-module input {
+.member-pane {
+  width: 15%;
+  height: 100%;
+  background-color: #E5E7E9;
+  position: fixed;
+  right: 0px;
+  top: 0px;
+  text-align: center;
+}
+
+#messageContent {
   border-radius: 5px;
   width: 430px;
+  padding: 10px 5px;
+  padding: 10px;
+  border: none;
+  outline: none;
+  display: inline-block;
+}
+
+#sendMessageButton {
+  position: relative;
+  top: 2px;
+  display: inline-block;
+  color: white;
+  background: none;
+  border: none;
+  border-radius: 100%;
+  width: 35px;
+  height: 35px;
+  font-size: 20px;
+  outline: none;
+  transition-duration: 300ms;
+}
+
+#sendMessageButton:hover {
+  color: #31A6FF;
+  background-color: white;
+}
+
+#Username {
+  border-radius: 5px;
+  width: 250px;
   padding: 10px 5px;
   border: solid 2px #31A6ff;
   outline: none;
