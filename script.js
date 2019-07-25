@@ -9,6 +9,7 @@ $(document).ready(function() {
   // Grab references for all of our elements.
   var messageContent = $('#messageContent'),
     sendMessageButton = $('#sendMessageButton'),
+    memberList = $('#memberList'),
     messageList = $('#messageList');
   var users = [];
   // Handles all the messages coming in from pubnub.subscribe.
@@ -105,7 +106,6 @@ if (localStorage.username == undefined) {
   localStorage.username = "user" + Math.floor(Math.random() * 100);
 }
 document.getElementById('Username').value = localStorage.username;
-document.getElementById('logonUser').innerText = localStorage.username;
 
 function reset() {
   document.getElementById('messageList').innerHTML = '';
