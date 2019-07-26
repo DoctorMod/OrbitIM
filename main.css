@@ -34,7 +34,7 @@
   display: inline-block;
 }
 
-.button	 {
+.button {
   position: relative;
   top: 2px;
   display: inline-block;
@@ -52,6 +52,7 @@
 .button:hover {
   color: #31A6FF;
   background-color: white;
+  cursor: pointer;
 }
 
 #Username {
