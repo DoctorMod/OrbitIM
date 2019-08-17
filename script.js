@@ -40,6 +40,7 @@ $(document).ready(function() {
     }
     var messageEl = $("<li class='message " + classVal + "'>" +
       "<span class='username'>" + message.username + ": </span>" +
+      "<span>" + message.time + "</span>" +
       messageText +
       "</li>");
     messageList.append(messageEl);
@@ -70,13 +71,14 @@ $(document).ready(function() {
   // Compose and send a message when the user clicks our send message button.
   sendMessageButton.click(function(event) {
     var message = messageContent.val();
-
+    var time = new Date();
     if (message != '') {
       pubnub.publish({
         channel: 'chat',
         message: {
           username: $('#Username').val(),
-          text: message
+          text: message,
+          time: time.getHours() + ":" + time.getSeconds() + ":" + time.getMinutes()
         }
       });
 
@@ -140,13 +142,14 @@ window.onbeforeunload = function() {
 repeat()
 
 function repeat() {
-  /*pubnub.publish({
-        channel: 'membersCheck',
-        message: {
-          username: $('#Username').val(),
-          send: "true"
-        }
-      });*/
+  /*
+  pubnub.publish({
+    channel: 'membersCheck',
+    message: {
+      username: $('#Username').val(),
+      send: "true"
+    }
+  });*/
   purify = document.getElementById('purify').checked;
   setTimeout(repeat, 100);
 }
