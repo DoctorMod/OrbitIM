@@ -21,8 +21,7 @@ $(document).ready(function() {
     var classVal = -1;
     if (purify == true) {
       var messageText = DOMPurify.sanitize(message.text, {
-        ALLOWED_TAGS: ['b', 'i', 'strong'],
-        ALLOWED_ATTR: ['style']
+        ALLOWED_TAGS: ['b', 'i', 'strong']
       });
     } else {
       var messageText = message.text;
@@ -74,9 +73,11 @@ $(document).ready(function() {
     var time = new Date();
     if (message != '') {
       pubnub.publish({
-        channel: 'chat',
+        channel: localStorage.channel,
         message: {
-          username: $('#Username').val(),
+          username: DOMPurify.sanitize($('#Username').val(), {
+          ALLOWED_TAGS: []
+          }),
           text: message,
           time: time.getHours() + ":" + time.getSeconds() + ":" + time.getMinutes()
         }
@@ -96,7 +97,7 @@ $(document).ready(function() {
 
   // Subscribe to messages coming in from the channel.
   pubnub.subscribe({
-    channel: 'chat',
+    channel: localStorage.channel,
     message: handleMessage
   });
 
@@ -106,7 +107,7 @@ $(document).ready(function() {
   });
 
   pubnub.publish({
-    channel: 'chat',
+    channel: localStorage.channel,
     message: {
       username: $('#Username').val(),
       text: "has joined the channel"
@@ -124,7 +125,9 @@ $(document).ready(function() {
 if (localStorage.username == undefined) {
   localStorage.username = "user" + Math.floor(Math.random() * 100);
 }
-document.getElementById('Username').value = localStorage.username;
+document.getElementById('Username').value = DOMPurify.sanitize(localStorage.username, {
+ALLOWED_TAGS: []
+});
 
 function reset() {
   document.getElementById('messageList').innerHTML = '';
@@ -132,7 +135,7 @@ function reset() {
 
 window.onbeforeunload = function() {
   pubnub.publish({
-    channel: 'chat',
+    channel: localStorage.channel,
     message: {
       username: $('#Username').val(),
       text: "has left the channel"
