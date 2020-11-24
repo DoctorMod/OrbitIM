@@ -5,6 +5,7 @@
   "dependencies": {
     "bad-language-filter": "^1.0.2",
     "express": "^4.17.1",
+    "log4js": "^6.3.0",
     "socket.io": "^3.0.3"
   },
   "scripts": {

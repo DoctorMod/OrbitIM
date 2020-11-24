@@ -14,51 +14,74 @@ app.get('/', function(req, res) {
 let currentUserList = {};
 
 function filterWords(msg) {
-    let filtered = filter.replaceWords("" + msg + " ", msg.substr(0,1)+"*".repeat(msg.length-1));
+    try {
+        filtered = filter.replaceWords("" + msg + " ", msg.substr(0, 1) + "*".repeat(msg.length - 1));
+    } catch (e) {
+        filtered = msg;
+    }
     return filtered;
 }
 
-
 io.on('connection', function(socket) {
+    //Chat Message
     socket.on('chat message', function(msg) {
-        
+
         out = JSON.parse(msg);
-        
-        console.log("checkName")
+
         out.username = filterWords(out.username);
-        console.log("checkMsg")
         out.text = filterWords(out.text);
-        
+
+        console.log("[" + out.time + "] " + "[" + out.hash + "]: " + out.username.substr(0, out.username.length - 1) + "; " + out.text);
+
+        currentUserList[out.hash] = currentUserList[out.hash] || {};
+        currentUserList[out.hash][out.uuid] = out.username;
         filtered = JSON.stringify(out);
-        
+
         io.emit('chat message', filtered);
-        message = JSON.parse(filtered);
-        currentUserList[message.uuid] = message.username;
-        //console.log(msg);
     });
-    socket.on('user connect', function(name) {
-        let filtered = filterWords(name[1]);
-        
-        let out = [name[0], filtered];
-        
-        io.emit('user connect', out);
-        
-        currentUserList[out[0]] = out[1];
-        console.log("connect");
-        console.log(currentUserList);
+
+    //Add User to system
+    socket.on('add User', function(name) {
+
+        out = JSON.parse(name);
+
+        out.username = filterWords(out.username);
+
+        currentUserList[out.hash] = currentUserList[out.hash] || {};
+        currentUserList[out.hash][out.uuid] = out.username;
+
+        filtered = JSON.stringify(out);
+
+        io.emit('user connect', filtered);
+
     });
-    socket.on('user dc', function(name) {
-        let filtered = filterWords(name[1]);
-        let out = [name[0], filtered];
-        io.emit('user dc', out);
-        delete currentUserList[out[0]];
-        console.log("dc")
-        console.log(currentUserList);
+
+    //Remove User from system
+    socket.on('remove User', function(name) {
+        out = JSON.parse(name);
+
+        out.username = filterWords(out.username);
+
+        currentUserList[out.hash] = currentUserList[out.hash] || {};
+        delete currentUserList[out.hash][out.uuid];
+        filtered = JSON.stringify(out);
+
+        io.emit('user dc', filtered);
     });
 });
 
+function clearEmpty(list) {
+    keys = Object.keys(list);
+
+    for (x in keys) {
+        if (x.length == 0) {
+            delete x;
+        }
+    }
+}
 setInterval(() => {
     io.emit('userlist', currentUserList);
+    clearEmpty(currentUserList);
 }, 1000);
 
 http.listen(port, function() {

@@ -4,19 +4,23 @@
     <title>Orbit IM</title>
     <style>
         * {
-            font-family: 'Rubik', sans-serif;
+            font-family: 'Rubik', 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', sans-serif;
         }
- 
+        
         .memberList {
             list-style-type: none;
-            padding:0;
+            padding: 0;
         }
-
+        
         #messageList {
             list-style-type: none;
-            padding-left:40px;
+            padding-left: 40px;
         }
-
+        
+        .display-content {
+            padding-bottom: 15vh;
+        }
+        
         .send-module {
             position: fixed;
             bottom: 0px;
@@ -111,7 +115,9 @@
         <div>
             <h1>Orbit Messenger</h1>
             <div>
-                <label><input id="Username" placeholder="Username" value="user"></input> has joined the channel</label>
+                <form id="usernameEnter" action="">
+                    <label><input id="Username" placeholder="Username" value="user"></input> has joined the channel</label>
+                </form>
             </div>
         </div>
         <div class="member-pane">
@@ -126,18 +132,30 @@
             </div>
         </div>
         <div class="send-module">
-            <form action="">
+            <form id="messageEnter" action="">
                 <input id="messageContent"></input>
             </form>
         </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
+        if (localStorage.val == null) {
+            localStorage.val = "user" + Math.floor(Math.random() * 100);
+        }
+
         $("#Username").val(localStorage.val);
+
+        function addZeros(num, size) {
+            num = num.toString();
+            while (num.length < size) num = "0" + num;
+            return num;
+        }
+
         function uuidv4() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0,
+                    v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
             });
         }
         userid = uuidv4();
@@ -146,19 +164,40 @@
             var socket = io();
 
             //Send
-            //User Connect
-            let account = [userid, $('#Username').val()];
-            socket.emit('user connect', account);
+
+            //User Connect function
+            function userConnect() {
+
+                let account = {
+                    'uuid': userid,
+                    'username': $('#Username').val(),
+                    'hash': location.hash.substr(1)
+                }
+
+                account = JSON.stringify(account);
+
+                return account;
+            }
+
+            //First Connect
+            socket.emit('add User', userConnect());
+
+            //Enter Username
+            $('#usernameEnter').submit(function() {
+                socket.emit('add User', userConnect());
+                return false;
+            });
 
             //Send Message
-            $('form').submit(function() {
+            $('#messageEnter').submit(function() {
                 let time = new Date();
                 localStorage.val = $("#Username").val();
                 let message = {
                     "uuid": userid,
                     "text": $('#messageContent').val(),
                     "username": $('#Username').val(),
-                    "time": time.getHours() + ":" + time.getSeconds() + ":" + time.getMinutes()
+                    "time": addZeros(time.getHours(), 2) + ":" + addZeros(time.getMinutes(), 2) + ":" + addZeros(time.getSeconds(), 2),
+                    "hash": location.hash.substr(1)
                 }
                 message = JSON.stringify(message);
 
@@ -167,38 +206,40 @@
                 return false;
             });
 
-            //User DC
-            $(window).on("beforeunload",(function() {
-                let account = [userid, $('#Username').val()];
-                socket.emit('user dc', account);
-            }));
-
-
+            //User closes tab
+            window.addEventListener('beforeunload', function(e) {
+                socket.emit('remove User', userConnect());
+            });
 
             //Recieve
 
-            //Get
+            //Get Userlist
             socket.on('userlist', function(userlist) {
-                keys = Object.keys(userlist);
-                $("#memberList").text("");
-                for (let i = 0; i < keys.length; i++) {
-                    let val = userlist[keys[i]];
-                    let member = $("<li>").text(val);
-                    $("#memberList").append(member);
-                }
+                try {
+                    let keyedList = userlist[location.hash.substr(1)];
+                    let keys = Object.keys(keyedList);
+                    $("#memberList").text("");
+                    for (let i = 0; i < keys.length; i++) {
+                        let val = keyedList[keys[i]];
+                        let member = $("<li>").text(val);
+                        $("#memberList").append(member);
+                    }
+                } catch (e) {}
             });
+
             //Chat Message
             socket.on('chat message', function(msg) {
                 message = JSON.parse(msg);
-                console.log(msg);
-                let messageEl = $("<li class='message " + "'>" +
-                    "<span class='username'>" + message.username + " </span>" +
-                    "<span class='time'>" + message.time + "</span><br/>" +
-                    message.text +
-                    "</li>");
+                if (message.hash == location.hash.substr(1)) {
+                    let messageEl = $("<li class='message " + "'>" +
+                        "<span class='username'>" + message.username + " </span>" +
+                        "<span class='time'>" + message.time + "</span><br/>" +
+                        message.text +
+                        "</li>");
 
-                $('#messageList').append(messageEl);
-                window.scrollTo(0, document.body.scrollHeight);
+                    $('#messageList').append(messageEl);
+                    window.scrollTo(0, document.body.scrollHeight);
+                }
             });
         });
     </script>
