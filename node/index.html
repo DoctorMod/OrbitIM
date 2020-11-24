@@ -6,7 +6,17 @@
         * {
             font-family: 'Rubik', sans-serif;
         }
-        
+ 
+        .memberList {
+            list-style-type: none;
+            padding:0;
+        }
+
+        #messageList {
+            list-style-type: none;
+            padding-left:40px;
+        }
+
         .send-module {
             position: fixed;
             bottom: 0px;
@@ -92,7 +102,7 @@
             font-size: 10px;
         }
     </style>
-    <link rel="shortcut icon" type="image/png" href="icon.png">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 </head>
 
@@ -118,29 +128,34 @@
         <div class="send-module">
             <form action="">
                 <input id="messageContent"></input>
-
-                <label for="messageContent">
-                  <button type="button" name="button" class="button" id="sendMessageButton"><i class="fas fa-paper-plane"></i></button>
-                </label>
-                <label>
-                  <button id="reset" class="button"><i class="fas fa-redo"></i></button>
-                </label>
             </form>
         </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
         $("#Username").val(localStorage.val);
+        function uuidv4() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+            });
+        }
+        userid = uuidv4();
 
         $(function() {
             var socket = io();
 
             //Send
-            socket.emit('user connect', $('#Username').val());
+            //User Connect
+            let account = [userid, $('#Username').val()];
+            socket.emit('user connect', account);
 
+            //Send Message
             $('form').submit(function() {
-                var time = new Date();
-                var message = {
+                let time = new Date();
+                localStorage.val = $("#Username").val();
+                let message = {
+                    "uuid": userid,
                     "text": $('#messageContent').val(),
                     "username": $('#Username').val(),
                     "time": time.getHours() + ":" + time.getSeconds() + ":" + time.getMinutes()
@@ -152,13 +167,31 @@
                 return false;
             });
 
+            //User DC
+            $(window).on("beforeunload",(function() {
+                let account = [userid, $('#Username').val()];
+                socket.emit('user dc', account);
+            }));
+
+
 
             //Recieve
+
+            //Get
+            socket.on('userlist', function(userlist) {
+                keys = Object.keys(userlist);
+                $("#memberList").text("");
+                for (let i = 0; i < keys.length; i++) {
+                    let val = userlist[keys[i]];
+                    let member = $("<li>").text(val);
+                    $("#memberList").append(member);
+                }
+            });
             //Chat Message
             socket.on('chat message', function(msg) {
                 message = JSON.parse(msg);
                 console.log(msg);
-                var messageEl = $("<li class='message " + "'>" +
+                let messageEl = $("<li class='message " + "'>" +
                     "<span class='username'>" + message.username + " </span>" +
                     "<span class='time'>" + message.time + "</span><br/>" +
                     message.text +
@@ -167,12 +200,6 @@
                 $('#messageList').append(messageEl);
                 window.scrollTo(0, document.body.scrollHeight);
             });
-
-            //User Connect
-            socket.on('user connect', function(name) {
-                console.log("name")
-                $("#memberList").append($("<li>").text(name));
-            })
         });
     </script>
 </body>
