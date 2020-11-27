@@ -1,22 +1,18 @@
 {
-  "name": "Socket-Chat-Example",
-  "description": "my first socket.io app",
-  "website": "https://github.com/socketio/chat-example",
-  "repository": "https://github.com/socketio/chat-example",
-  "logo": "https://node-js-sample.herokuapp.com/node.svg",
+  "name": "OrbitIM",
+  "description": "Orbit Web messanger",
+  "version": "2.0",
+  "website": "https://doctormod.sytes.net",
+  "repository": "https://github.com/DoctorMod/OrbitIM",
+  "logo": "icon.png",
   "success_url": "/",
   "keywords": [
     "node",
     "express",
     "socket.io",
     "realtime",
-    "websocket"
-  ],
-  "scripts": {
-  },
-  "addons": [
-  ],
-  "env": {
-    "BUILDPACK_URL": "https://github.com/heroku/heroku-buildpack-nodejs"
-  }
+    "websocket",
+    "IM",
+    "Orbit"
+  ]
 }
