@@ -4,12 +4,14 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
-
+var favicon = require('serve-favicon');
 var filter = new BadLanguageFilter();
 
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');
 });
+
+app.use(favicon(__dirname + '/favicon.ico'));
 
 let currentUserList = {};
 
