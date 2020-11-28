@@ -113,7 +113,7 @@
 <body>
     <div>
         <div>
-            <h1>Orbit Messenger</h1>
+            <h1>Orbit Messenger <span style="font-size:15px;" id="hash"></span></h1>
             <div>
                 <form id="usernameEnter" action="">
                     <label><input id="Username" placeholder="Username" value="user"></input> has joined the channel</label>
@@ -192,6 +192,8 @@
         }
         userid = uuidv4();
 
+        $("#hash").text(location.hash.substr(1));
+
         $(function() {
             var socket = io();
 
@@ -249,6 +251,7 @@
             window.addEventListener('hashchange', function(e) {
                 socket.emit('remove User', userConnect(userid, $('#Username').val(), e.srcElement.location.hash.substr(1)));
                 $("#messageList").html('');
+                $("#hash").text(location.hash.substr(1));
                 socket.emit('add User', userConnect(userid, $('#Username').val(), location.hash.substr(1)));
             });
 
