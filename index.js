@@ -28,24 +28,28 @@ var passcode = '&wL.>C7*b3A&?=[4RDZCUm6]C];PA5+d,d2X?_78PA\\YT2\\,*LX3(=7gM#q"98
 
 var webdevencrypt = {
     encryptCodes: function(content) {
-        var result = []; var passLen = passcode.length ;
-        for(var i = 0  ; i < content.length ; i++) {
-            var passOffset = i%passLen ;
-            var calAscii = (content.charCodeAt(i)+passcode.charCodeAt(passOffset));
+        var result = [];
+        var passLen = passcode.length;
+        for (var i = 0; i < content.length; i++) {
+            var passOffset = i % passLen;
+            var calAscii = (content.charCodeAt(i) + passcode.charCodeAt(passOffset));
             result.push(calAscii);
         }
         return JSON.stringify(result);
-        },
+    },
     decryptCodes: function(content) {
-        var result = [];var str = '';
-        var codesArr = JSON.parse(content);var passLen = passcode.length ;
-        for(var i = 0  ; i < codesArr.length ; i++) {
-            var passOffset = i%passLen ;
-            var calAscii = (codesArr[i]-passcode.charCodeAt(passOffset));
-            result.push(calAscii) ;
+        var result = [];
+        var str = '';
+        var codesArr = JSON.parse(content);
+        var passLen = passcode.length;
+        for (var i = 0; i < codesArr.length; i++) {
+            var passOffset = i % passLen;
+            var calAscii = (codesArr[i] - passcode.charCodeAt(passOffset));
+            result.push(calAscii);
         }
-        for(var i = 0 ; i < result.length ; i++) {
-            var ch = String.fromCharCode(result[i]); str += ch ;
+        for (var i = 0; i < result.length; i++) {
+            var ch = String.fromCharCode(result[i]);
+            str += ch;
         }
         return str;
     }
@@ -69,7 +73,7 @@ io.on('connection', function(socket) {
         currentUserList[out.hash] = currentUserList[out.hash] || {};
         currentUserList[out.hash][out.uuid] = out.username;
         filtered = JSON.stringify(out);
-        
+
         sendable = webdevencrypt.encryptCodes(filtered);
 
         io.emit('chat message', sendable);
@@ -78,7 +82,6 @@ io.on('connection', function(socket) {
     //Add User to system
     socket.on('add User', function(encrypted) {
         name = webdevencrypt.decryptCodes(encrypted);
-        console.log(name);
         out = JSON.parse(name);
 
         out.username = filterWords(out.username);
@@ -100,10 +103,13 @@ io.on('connection', function(socket) {
 
         out = JSON.parse(name);
 
-        out.username = filterWords(out.username);
+        let keys = Object.keys(currentUserList);
+
+        keys.forEach(item => {
+            delete currentUserList[item][out.uuid];
+        });
 
         currentUserList[out.hash] = currentUserList[out.hash] || {};
-        delete currentUserList[out.hash][out.uuid];
         filtered = JSON.stringify(out);
 
         sendable = webdevencrypt.encryptCodes(filtered);
