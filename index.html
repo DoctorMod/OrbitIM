@@ -170,7 +170,6 @@
     <script>
 
         if (localStorage.username == null) {
-            console.log(localStorage.username);
            localStorage.username = "user" + Math.floor(Math.random() * 100);
         }
 
@@ -246,8 +245,8 @@
             //User Changes tab
 
             window.addEventListener('hashchange', function(e) {
-                console.log(e);
                 socket.emit('remove User', userConnect());
+                location.reload();
             });
 
             //User closes tab
@@ -259,7 +258,6 @@
 
             //Get Userlist
             socket.on('userlist', function(encrypted) {
-                console.log(encrypted);
                 userliststring = webdevencrypt.decryptCodes(encrypted);
                 userlist = JSON.parse(userliststring);
                     let keyedList = userlist[location.hash.substr(1)];
