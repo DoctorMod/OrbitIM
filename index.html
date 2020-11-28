@@ -2,124 +2,22 @@
 
 <head>
     <title>Orbit IM</title>
-    <style>
-        * {
-            font-family: 'Rubik', 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', sans-serif;
-        }
-        
-        .memberList {
-            list-style-type: none;
-            padding: 0;
-        }
-        
-        #messageList {
-            list-style-type: none;
-            padding-left: 40px;
-        }
-        
-        .display-content {
-            padding-bottom: 15vh;
-        }
-        
-        .send-module {
-            position: fixed;
-            bottom: 0px;
-            padding-top: 25px;
-            padding-bottom: 25px;
-            left: 0px;
-            width: 100%;
-            border-radius: 20px 20px 0px 0px;
-            background-image: linear-gradient(to right, #31a6ff, #31c7ff);
-            text-align: center;
-        }
-        
-        .centred {
-            margin: auto;
-            width: 50%;
-            font-size: 40px;
-            text-align: center;
-        }
-        
-        .okButton {
-            border: none;
-            border-radius: 5px;
-            background-color: #31A6FF;
-            padding: 10px 35px;
-            font-size: 25px;
-        }
-        
-        .member-pane {
-            width: 15%;
-            height: 100%;
-            background-color: #E5E7E9;
-            position: fixed;
-            right: 0px;
-            top: 0px;
-            text-align: center;
-        }
-        
-        #messageContent {
-            border-radius: 5px;
-            width: 430px;
-            padding: 10px 5px;
-            padding: 10px;
-            border: none;
-            outline: none;
-            display: inline-block;
-        }
-        
-        .button {
-            position: relative;
-            top: 2px;
-            display: inline-block;
-            color: white;
-            background: none;
-            border: none;
-            border-radius: 100%;
-            width: 35px;
-            height: 35px;
-            font-size: 20px;
-            outline: none;
-            transition-duration: 300ms;
-        }
-        
-        .button:hover {
-            color: #31A6FF;
-            background-color: white;
-            cursor: pointer;
-        }
-        
-        #Username {
-            border-radius: 5px;
-            width: 250px;
-            padding: 10px 5px;
-            border: solid 2px #31A6ff;
-            outline: none;
-        }
-        
-        .username {
-            font-weight: bold;
-        }
-        
-        .time {
-            color: darkgray;
-            font-size: 10px;
-        }
-    </style>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500,700">
     <script src="https://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div>
-        <div>
+        <header>
             <h1>Orbit Messenger</h1>
             <div>
                 <form id="usernameEnter" action="">
                     <label><input id="Username" placeholder="Username" value="user"></input> has joined the channel</label>
                 </form>
             </div>
-        </div>
+        </header>
         <div class="member-pane">
             <h1>Members</h1>
             <ul class="memberList" id="memberList">
@@ -143,25 +41,25 @@
         var passcode = '&wL.>C7*b3A&?=[4RDZCUm6]C];PA5+d,d2X?_78PA\\YT2\\,*LX3(=7gM#q"98!PwLmCrh\\kh$^+&6c?5~-7u&G\\X.$FcNKCQsg9Y*38Dc+MB;GzHM+J%;K}!Y>vgB[^"<E:RT)?fBw!-}<{-kKq+$g}M~>Z}D=h9\\8L6M6wu`r?"M!,Ej32}_Srjdf"L8L5vx:yU-mA~*aE6CYL%-VYM!RqLGD-"c;.6PcrKAYLv^^$xU:!zLk2GV$evd8!9[%Z';
 
         var webdevencrypt = {
-            encryptCodes: function(content) {
-                var result = []; var passLen = passcode.length ;
-                for(var i = 0  ; i < content.length ; i++) {
-                    var passOffset = i%passLen ;
-                    var calAscii = (content.charCodeAt(i)+passcode.charCodeAt(passOffset));
+            encryptCodes: function (content) {
+                var result = []; var passLen = passcode.length;
+                for (var i = 0; i < content.length; i++) {
+                    var passOffset = i % passLen;
+                    var calAscii = (content.charCodeAt(i) + passcode.charCodeAt(passOffset));
                     result.push(calAscii);
                 }
                 return JSON.stringify(result);
-                },
-            decryptCodes: function(content) {
-                var result = [];var str = '';
-                var codesArr = JSON.parse(content);var passLen = passcode.length ;
-                for(var i = 0  ; i < codesArr.length ; i++) {
-                    var passOffset = i%passLen ;
-                    var calAscii = (codesArr[i]-passcode.charCodeAt(passOffset));
-                    result.push(calAscii) ;
+            },
+            decryptCodes: function (content) {
+                var result = []; var str = '';
+                var codesArr = JSON.parse(content); var passLen = passcode.length;
+                for (var i = 0; i < codesArr.length; i++) {
+                    var passOffset = i % passLen;
+                    var calAscii = (codesArr[i] - passcode.charCodeAt(passOffset));
+                    result.push(calAscii);
                 }
-                for(var i = 0 ; i < result.length ; i++) {
-                    var ch = String.fromCharCode(result[i]); str += ch ;
+                for (var i = 0; i < result.length; i++) {
+                    var ch = String.fromCharCode(result[i]); str += ch;
                 }
                 return str;
             }
@@ -170,7 +68,7 @@
     <script>
 
         if (localStorage.username == null) {
-           localStorage.username = "user" + Math.floor(Math.random() * 100);
+            localStorage.username = "user" + Math.floor(Math.random() * 100);
         }
 
         $("#Username").val(localStorage.username);
@@ -182,7 +80,7 @@
         }
 
         function uuidv4() {
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
                 var r = Math.random() * 16 | 0,
                     v = c == 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
@@ -190,7 +88,7 @@
         }
         userid = uuidv4();
 
-        $(function() {
+        $(function () {
             var socket = io();
 
             //Send
@@ -215,17 +113,17 @@
             socket.emit('add User', userConnect());
 
             //Enter Username
-            $('#usernameEnter').submit(function() {
+            $('#usernameEnter').submit(function () {
                 socket.emit('add User', userConnect());
                 return false;
             });
 
             //Send Message
-            $('#messageEnter').submit(function() {
+            $('#messageEnter').submit(function () {
                 if ($("#messageContent").val() != '') {
                     let time = new Date();
                     localStorage.val = $("#Username").val();
-                    let message = { 
+                    let message = {
                         "uuid": userid,
                         "text": $('#messageContent').val(),
                         "username": $('#Username').val(),
@@ -244,35 +142,35 @@
 
             //User Changes tab
 
-            window.addEventListener('hashchange', function(e) {
+            window.addEventListener('hashchange', function (e) {
                 socket.emit('remove User', userConnect());
                 location.reload();
             });
 
             //User closes tab
-            window.addEventListener('beforeunload', function(e) {
+            window.addEventListener('beforeunload', function (e) {
                 socket.emit('remove User', userConnect());
             });
 
             //Recieve
 
             //Get Userlist
-            socket.on('userlist', function(encrypted) {
+            socket.on('userlist', function (encrypted) {
                 userliststring = webdevencrypt.decryptCodes(encrypted);
                 userlist = JSON.parse(userliststring);
-                    let keyedList = userlist[location.hash.substr(1)];
-                    let keys = Object.keys(keyedList);
-                    $("#memberList").text("");
-                    for (let i = 0; i < keys.length; i++) {
-                        let val = keyedList[keys[i]];
-                        let member = $("<li>").text(val);
-                        $("#memberList").append(member);
-                    }
-                
+                let keyedList = userlist[location.hash.substr(1)];
+                let keys = Object.keys(keyedList);
+                $("#memberList").text("");
+                for (let i = 0; i < keys.length; i++) {
+                    let val = keyedList[keys[i]];
+                    let member = $("<li>").text(val);
+                    $("#memberList").append(member);
+                }
+
             });
 
             //Chat Message
-            socket.on('chat message', function(encrypted) {
+            socket.on('chat message', function (encrypted) {
                 msg = webdevencrypt.decryptCodes(encrypted);
                 message = JSON.parse(msg);
                 if (message.hash == location.hash.substr(1)) {
