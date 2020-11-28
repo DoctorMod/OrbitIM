@@ -11,6 +11,10 @@ app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
+app.get('/style.css', function(req, res) {
+    res.sendFile(__dirname + '/style.css');
+});
+
 app.use(favicon(__dirname + '/favicon.ico'));
 
 let currentUserList = {};
