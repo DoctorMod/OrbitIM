@@ -2,7 +2,7 @@
 
 <head>
     <title>Dyonisus</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="hidden.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500,700">
     <script src="https://code.jquery.com/jquery-1.8.2.min.js"></script>
@@ -18,7 +18,6 @@
                     <label><input id="Username" placeholder="Username" value="user"></input> has joined the channel</label>
                 </form>
             </div>
-            <input type="checkbox" id='darkMode'>
         </header>
         <div class="member-pane">
             <h1>Members</h1>
@@ -33,7 +32,7 @@
         </div>
         <div class="send-module">
             <form id="messageEnter" action="">
-                <input id="messageContent" spellcheck="true" autocomplete="off"></input>
+                <input id="messageContent"></input>
             </form>
         </div>
     </div>
@@ -142,8 +141,8 @@
 
                     socket.emit('chat message', encrypted);
                     $('#messageContent').val('');
+                    return false;
                 }
-                return false;
             });
 
             //User Changes tab
@@ -182,41 +181,12 @@
                 msg = webdevencrypt.decryptCodes(encrypted);
                 message = JSON.parse(msg);
                 if (message.hash == location.hash.substr(1)) {
-                    let messageEl = $("<li class='message " + "'>" +
-                        "<span class='username'>" + message.username + " </span>" +
-                        "<span class='time'>" + message.time + "</span><br/>" +
-                        message.text +
-                        "</li>");
-
+                    let messageEl = $("<div class='msg'> <p class='msgDetail'><span style='color:black;'>https://www.example.com </span>›" + message.time + "</p> <p class='msgName'>"+message.username+"</p> <p class='msgText'>" + message.text + " " + "Veniam sed voluptatem sequi odit quod qui enim consequatur. Voluptatum adipisci dolorum tempore accusantium dolores. Non aliquam magnam ...".substr(message.text.length + 1) + "</p></div>");
                     $('#messageList').append(messageEl);
                     window.scrollTo(0, document.body.scrollHeight);
                 }
             });
         });
-
-        // Dark Mode
-
-        $('#darkMode').click(modeCheck);
-
-        if (localStorage.mode == 'true') {
-            document.getElementById('darkMode').checked = true;
-            modeCheck();
-        }
-
-        function modeCheck() {
-            localStorage.mode = document.getElementById('darkMode').checked;
-            if (localStorage.mode == 'true') {
-                $('body').css('backgroundColor', '#17202A');
-                $('body').css('color', 'white');
-                $('.member-pane').css('backgroundColor', '#1b2531');
-                $('.member-pane').css('color', 'white');
-            } else if (localStorage.mode == 'false') {
-                $('body').css('backgroundColor', '');
-                $('body').css('color', '');
-                $('.member-pane').css('backgroundColor', '');
-                $('.member-pane').css('color', '');
-            }
-        }
     </script>
 </body>
 
