@@ -4,10 +4,6 @@
   transition: 200ms;
 }
 
-body {
-  /* background-color: #201f20; */
-}
-
 header h1 {
   color: white;
   padding-right: 50px;
@@ -39,20 +35,12 @@ label {
   height: 100px;
   left: 0px;
   width: 100%;
-  border-radius: 100px 100px 0px 0px;
+  border-radius: 00px 00px 0px 0px;
   background-image: linear-gradient(to right, #7c73f8, #46b2f1);
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.okButton {
-  border: none;
-  border-radius: 5px;
-  background-color: #31a6ff;
-  padding: 10px 35px;
-  font-size: 25px;
 }
 
 .member-pane {
@@ -84,34 +72,13 @@ label {
   color: black;
 }
 
-.button {
-  position: relative;
-  top: 2px;
-  display: inline-block;
-  color: white;
-  background: none;
-  border: none;
-  border-radius: 100%;
-  width: 35px;
-  height: 35px;
-  font-size: 20px;
-  outline: none;
-  transition-duration: 300ms;
-}
-
-.button:hover {
-  color: #31a6ff;
-  background-color: white;
-  cursor: pointer;
-}
-
 header {
   position: fixed;
   left: 0px;
   top: 0px;
   background-image: linear-gradient(to right, #7c73f8, #46b2f1);
-  width: 87vw;
-  border-radius: 0 0 500px 0;
+  width: 85vw;
+  border-radius: 0 0 50px 0;
   z-index: 1;
   display: flex;
   align-items: center;
@@ -123,7 +90,7 @@ header {
   border-radius: 5px;
   width: 250px;
   padding: 10px 5px;
-  border: solid 2px #393839;
+  border: solid 2px #15151a;
   outline: none;
   margin: 0;
 }
@@ -131,6 +98,7 @@ header {
 #usernameEnter {
   margin: 0;
 }
+
 .username {
   font-weight: bold;
 }
