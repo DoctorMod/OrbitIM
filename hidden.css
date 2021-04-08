@@ -69,17 +69,20 @@ label {
   font-size: 14px;
   line-height: 1.3;
   margin: 0px;
+  font-family: arial, sans-serif !important;
 }
 .msgName {
   margin: 10px 0 8px 0;
   font-size: 20px;
   color: #1A0DAB;
   line-height: 1.3;
+  font-family: arial, sans-serif !important;
 }
 
 .msgText {
   margin: 5px 0 0 0;
   color: grey;
+  font-family: arial, sans-serif !important;
 }
 
 .msg {
