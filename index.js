@@ -21,7 +21,9 @@ app.get('/style.css', function(req, res) {
 app.get('/hidden.css', function(req, res) {
     res.sendFile(__dirname + '/hidden.css');
 });
-
+app.get('/google.png', function(req, res) {
+    res.sendFile(__dirname + '/google.png');
+});
 app.use(favicon(__dirname + '/favicon.ico'));
 
 let currentUserList = {};
