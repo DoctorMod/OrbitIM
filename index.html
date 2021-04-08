@@ -18,6 +18,7 @@
                     <label><input id="Username" placeholder="Username" value="user"></input> has joined the channel</label>
                 </form>
             </div>
+            <input type="checkbox" id='darkMode'>
         </header>
         <div class="member-pane">
             <h1>Members</h1>
@@ -192,6 +193,32 @@
                 }
             });
         });
+
+        // Dark Mode
+
+        $('#darkMode').click(modeCheck);
+
+        if (localStorage.mode == 'true') {
+            document.getElementById('darkMode').checked = true;
+            modeCheck();
+        }
+
+        function modeCheck() {
+            localStorage.mode = document.getElementById('darkMode').checked;
+            if (localStorage.mode == 'true') {
+                $('body').css('backgroundColor', '#15151A');
+                $('body').css('color', 'white');
+                $('.member-pane').css('backgroundColor', '#1b1b22');
+                $('.member-pane').css('color', 'white');
+            } else if (localStorage.mode == 'false') {
+                $('body').css('backgroundColor', '');
+                $('body').css('color', '');
+                $('.member-pane').css('backgroundColor', '');
+                $('.member-pane').css('color', '');
+            }
+        }
+
+
     </script>
 </body>
 
