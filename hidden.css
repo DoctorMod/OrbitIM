@@ -1,9 +1,7 @@
 * {
-  font-family: Arial, sans-serif;
-}
-
-body {
-  /* background-color: #201f20; */
+  font-family: Google Sans, Helvetica, Arial, sans-serif;
+  outline: none;
+  transition: 200ms;
 }
 
 header h1 {
@@ -25,6 +23,10 @@ label {
   padding-left: 40px;
 }
 
+.message {
+  margin-bottom: 25px;
+}
+
 .display-content {
   padding-bottom: 15vh;
   position: relative;
@@ -37,7 +39,7 @@ label {
   height: 100px;
   left: 0px;
   width: 100%;
-  border-radius: 100px 100px 0px 0px;
+  border-radius: 00px 00px 0px 0px;
   background-image: linear-gradient(to right, #7c73f8, #46b2f1);
   text-align: center;
   display: flex;
@@ -45,59 +47,25 @@ label {
   align-items: center;
 }
 
-.okButton {
-  border: none;
-  border-radius: 5px;
-  background-color: #31a6ff;
-  padding: 10px 35px;
-  font-size: 25px;
-}
-
 .member-pane {
-  width: 14.75vw;
+  width: 200px;
   height: 100%;
-  background-image: white;
+  background-color: #fbfcfc;
   position: fixed;
   padding: 0;
   right: 0px;
   top: 0px;
   border-radius: 30px 0;
   text-align: center;
-  border-left: 5px solid #393839;
-  border-top: 5px solid #393839;
+  color: #15151a;
 }
 
 #messageEnter {
   margin: 0;
 }
-* {
-  font-family: arial, sans-serif;
-}
-.msgDetail {
-  color: grey;
-  font-size: 14px;
-  line-height: 1.3;
-  margin: 0px;
-}
-.msgName {
-  margin: 10px 0 8px 0;
-  font-size: 20px;
-  color: #1a0dab;
-  line-height: 1.3;
-}
-
-.msgText {
-  margin: 5px 0 0 0;
-  color: grey;
-}
-
-.msg {
-  width: 600px;
-  margin-bottom: 30px;
-}
 
 #messageContent {
-  border-radius: 15px;
+  border-radius: 30px;
   width: 50vw;
   padding: 10px 5px;
   padding: 10px;
@@ -106,47 +74,27 @@ label {
   outline: none;
   display: inline-block;
   color: black;
-}
-
-.button {
-  position: relative;
-  top: 2px;
-  display: inline-block;
-  color: white;
-  background: none;
-  border: none;
-  border-radius: 100%;
-  width: 35px;
-  height: 35px;
-  font-size: 20px;
-  outline: none;
-  transition-duration: 300ms;
-}
-
-.button:hover {
-  color: #31a6ff;
-  background-color: white;
-  cursor: pointer;
+  box-shadow: 0 1px 15px -6px #00000070;
 }
 
 header {
   position: fixed;
   left: 0px;
   top: 0px;
-  height: 135px;
-  border-bottom: 1px solid black;
   width: 100%;
+  height: 133px;
   z-index: 1;
   display: flex;
   align-items: center;
   padding-left: 15px;
+  border-bottom: 0.5px solid lightgray;
 }
 
 #Username {
   border-radius: 5px;
   width: 250px;
   padding: 10px 5px;
-  border: solid 2px #393839;
+  border: solid 2px #15151a;
   outline: none;
   margin: 0;
 }
@@ -154,6 +102,7 @@ header {
 #usernameEnter {
   margin: 0;
 }
+
 .username {
   font-weight: bold;
 }
@@ -161,4 +110,39 @@ header {
 .time {
   color: darkgray;
   font-size: 10px;
+}
+
+/* Checkbox */
+input[type='checkbox'] {
+  position: relative;
+  width: 40px;
+  height: 20px;
+  -webkit-appearance: none;
+  background: #f5b7b1;
+
+  border-radius: 20px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  transition: 0.5s;
+}
+
+input:checked[type='checkbox'] {
+  background: #82e0aa;
+}
+
+input[type='checkbox']:before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  top: 0;
+  left: 0;
+  background: #fff;
+  transform: scale(1.1);
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+  transition: 0.5s;
+}
+
+input:checked[type='checkbox']:before {
+  left: 20px;
 }
