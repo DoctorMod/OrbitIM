@@ -11,8 +11,15 @@ app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
+app.get('/hidden', function(req, res) {
+    res.sendFile(__dirname + '/hidden.html');
+});
+
 app.get('/style.css', function(req, res) {
     res.sendFile(__dirname + '/style.css');
+});
+app.get('/hidden.css', function(req, res) {
+    res.sendFile(__dirname + '/hidden.css');
 });
 
 app.use(favicon(__dirname + '/favicon.ico'));
@@ -71,7 +78,7 @@ io.on('connection', function(socket) {
 
         out = JSON.parse(msg);
 
-        console.log("[" + out.time + "] " + "[" + out.hash + "]: " + out.username.substr(0, out.username.length - 1) + "; " + out.text);
+        console.log("[" + out.time + "] " + "[" + out.hash + "]: " + out.username + "; " + out.text);
 
         out.username = filterWords(out.username);
         out.text = filterWords(out.text);

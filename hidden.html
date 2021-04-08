@@ -2,7 +2,7 @@
 
 <head>
     <title>Dyonisus</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="hidden.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500,700">
     <script src="https://code.jquery.com/jquery-1.8.2.min.js"></script>
@@ -32,7 +32,7 @@
         </div>
         <div class="send-module">
             <form id="messageEnter" action="">
-                <input id="messageContent" spellcheck="true" autocomplete="off"></input>
+                <input id="messageContent"></input>
             </form>
         </div>
     </div>
@@ -141,8 +141,8 @@
 
                     socket.emit('chat message', encrypted);
                     $('#messageContent').val('');
+                    return false;
                 }
-                return false;
             });
 
             //User Changes tab
@@ -181,12 +181,7 @@
                 msg = webdevencrypt.decryptCodes(encrypted);
                 message = JSON.parse(msg);
                 if (message.hash == location.hash.substr(1)) {
-                    let messageEl = $("<li class='message " + "'>" +
-                        "<span class='username'>" + message.username + " </span>" +
-                        "<span class='time'>" + message.time + "</span><br/>" +
-                        message.text +
-                        "</li>");
-
+                    let messageEl = $("<div class='msg'> <p class='msgDetail'><span style='color:black;'>https://www.example.com </span>›" + message.time + "</p> <p class='msgName'>"+message.username+"</p> <p class='msgText'>" + message.text + " " + "Veniam sed voluptatem sequi odit quod qui enim consequatur. Voluptatum adipisci dolorum tempore accusantium dolores. Non aliquam magnam ...".substr(message.text.length + 1) + "</p></div>");
                     $('#messageList').append(messageEl);
                     window.scrollTo(0, document.body.scrollHeight);
                 }

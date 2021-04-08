@@ -1,5 +1,5 @@
 * {
-  font-family: Google Sans, Helvetica, Arial, sans-serif;
+  font-family: Arial, sans-serif;
 }
 
 body {
@@ -23,10 +23,6 @@ label {
 #messageList {
   list-style-type: none;
   padding-left: 40px;
-}
-
-.message {
-  margin-bottom: 25px;
 }
 
 .display-content {
@@ -73,6 +69,31 @@ label {
 
 #messageEnter {
   margin: 0;
+}
+* {
+  font-family: arial,sans-serif;
+}
+.msgDetail {
+  color: grey;
+  font-size: 14px;
+  line-height: 1.3;
+  margin: 0px;
+}
+.msgName {
+  margin: 10px 0 8px 0;
+  font-size: 20px;
+  color: #1A0DAB;
+  line-height: 1.3;
+}
+
+.msgText {
+  margin: 5px 0 0 0;
+  color: grey;
+}
+
+.msg {
+  width: 600px;
+  margin-bottom: 30px;
 }
 
 #messageContent {
